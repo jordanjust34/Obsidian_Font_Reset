@@ -1,92 +1,100 @@
-# Obsidian Sample Plugin
+# Font Reset
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+An [Obsidian](https://obsidian.md) plugin that resets your font size and zoom level back to normal with one click.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+Obsidian lets you change the font size with hotkeys or **Ctrl/Cmd + scroll**, and zoom the whole window with zoom hotkeys. It has no quick way to get back to the default afterwards. Font Reset adds a reset button to the status bar at the bottom of the window.
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
+## Features
 
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open modal (simple)" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and outputs a Notice on click.
-- Registers a global interval which logs 'setInterval' to the console.
+- **Status bar button**: select the reset icon at the bottom of the window to restore your default font size.
+- **Command palette**: run **Font Reset: Reset font size** from the command palette, or assign it your own hotkey in **Settings → Hotkeys**.
+- **Configurable default**: choose the font size the button restores, from 10 to 30 px (Obsidian's own default is 16 px).
+- **Window zoom reset**: optionally reset the window zoom level at the same time, so one click undoes both kinds of zoom.
 
-## First time developing plugins?
+## Usage
 
-Quick starting guide for new plugin devs:
+1. Install and enable the plugin in **Settings → Community plugins**.
+2. Change the font size or zoom as you normally would.
+3. Select the **rotate** icon in the status bar, or run **Font Reset: Reset font size** from the command palette.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `src/main.ts` to `main.js`.
-- Make changes to `src/main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Settings
 
-## Releasing new releases
+Open **Settings → Font Reset**.
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+| Setting                 | Description                                                                                   | Default |
+| ----------------------- | --------------------------------------------------------------------------------------------- | ------- |
+| **Default font size**   | The font size restored when you reset. Select the reset icon next to the slider to go back to 16. | 16 px   |
+| **Also reset window zoom** | Also resets the window zoom changed with zoom hotkeys or Ctrl/Cmd + scroll. Desktop only.  | On      |
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## Compatibility
 
-## Adding your plugin to the community plugin list
+- Requires Obsidian **1.4.0** or later.
+- **Desktop:** the status bar button, the command, and the window zoom reset all work.
+- **Mobile:** Obsidian's mobile app has no status bar, so the button isn't shown. The command still works and resets the font size. Window zoom isn't available on mobile.
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+### A note on undocumented APIs
 
-## How to use
+Obsidian's public plugin API has no way to change the font size or zoom level. This plugin calls the same internal methods that Obsidian's own font-size hotkeys use (`app.setBaseFontSize`) and runs Obsidian's built-in `window:reset-zoom` command.
 
-- Clone this repo.
-- Make sure your NodeJS is at least v18 (`node --version`).
-- `npm i` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+These are not part of the supported API and could change in a future Obsidian release. The plugin checks that they exist before using them. If they're missing or fail, you'll see a notice and your notes are never modified. If a future Obsidian update breaks the reset, please [open an issue](https://github.com/jordanjust34/Obsidian_Font_Reset/issues).
 
-## Manually installing the plugin
+## Privacy
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+Font Reset works entirely offline. It makes no network requests, collects no data, and only stores its two settings in your vault's plugin folder (`.obsidian/plugins/font-reset/data.json`).
 
-## Improve code quality with eslint
+## Installation
 
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code.
-- This project already has eslint preconfigured, you can invoke a check by running`npm run lint`
-- Together with a custom eslint [plugin](https://github.com/obsidianmd/eslint-plugin) for Obsidan specific code guidelines.
-- A GitHub action is preconfigured to automatically lint every commit on all branches.
+### From the community plugin list
 
-## Funding URL
+Once published, search for **Font Reset** in **Settings → Community plugins → Browse**.
 
-You can include funding URLs where people who use your plugin can financially support it.
+### Manual installation
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/jordanjust34/Obsidian_Font_Reset/releases).
+2. Copy them to `<Vault>/.obsidian/plugins/font-reset/`.
+3. Reload Obsidian and enable **Font Reset** in **Settings → Community plugins**.
 
-```json
-{
-	"fundingUrl": "https://buymeacoffee.com"
-}
+## Development
+
+Requires Node.js 18 or later.
+
+```bash
+npm install      # install dependencies
+npm run dev      # build in watch mode
+npm run build    # type-check and produce a production main.js
+npm run lint     # lint (warnings are treated as errors)
 ```
 
-If you have multiple URLs, you can also do:
+For quick testing, clone this repo into `<Vault>/.obsidian/plugins/font-reset/`, run `npm run dev`, then reload Obsidian.
 
-```json
-{
-	"fundingUrl": {
-		"Buy Me a Coffee": "https://buymeacoffee.com",
-		"GitHub Sponsor": "https://github.com/sponsors",
-		"Patreon": "https://www.patreon.com/"
-	}
-}
+### Project layout
+
+```
+src/
+  main.ts                  Plugin lifecycle only
+  commands.ts              Command palette registration
+  reset.ts                 The reset action and user feedback
+  font-size.ts             Isolated access to Obsidian's internal font-size APIs
+  settings.ts              Settings interface, validation, and settings tab
+  ui/status-bar-button.ts  Status bar button
+styles.css                 Button styles (must stay at the repo root)
 ```
 
-## API Documentation
+All Obsidian-internal calls live in `src/font-size.ts`, so if Obsidian changes them, that is the only file to update.
 
-See https://docs.obsidian.md
+### Linting
+
+ESLint runs with [`eslint-plugin-obsidianmd`](https://github.com/obsidianmd/eslint-plugin), which checks for Obsidian's plugin guidelines, including whether each API used exists in the declared `minAppVersion`. CI runs the build and lint on every push and pull request.
+
+One rule, `obsidianmd/settings-tab/prefer-setting-definitions`, is turned off in `eslint.config.mts`. It recommends an API that requires Obsidian 1.13 or later, and this plugin deliberately supports older versions.
+
+### Releasing
+
+1. Update `minAppVersion` in `manifest.json` if you started using a newer API.
+2. Run `npm version patch` (or `minor` / `major`). This bumps the version in `package.json`, `manifest.json`, and `versions.json`.
+3. Push the tag. The release workflow builds the plugin and creates a **draft** GitHub release with `main.js`, `manifest.json`, and `styles.css` attached.
+4. Review the draft and publish it. The tag must exactly match the version in `manifest.json`, with no leading `v`.
+
+## License
+
+[0-BSD](LICENSE)
