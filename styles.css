@@ -1,8 +1,25 @@
-/*
+.font-reset-status-bar {
+	display: flex;
+	align-items: center;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.font-reset-status-bar .font-reset-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px 5px;
+	box-shadow: none;
+	background: transparent;
+	color: var(--text-muted);
+	cursor: pointer;
+}
 
-If your plugin does not need CSS, delete this file.
+.font-reset-status-bar .font-reset-button:hover {
+	color: var(--text-normal);
+	background: var(--background-modifier-hover);
+}
 
-*/
+.font-reset-status-bar .font-reset-button svg {
+	width: 14px;
+	height: 14px;
+}
