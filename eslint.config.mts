@@ -29,4 +29,13 @@ export default defineConfig(
 		},
 	},
 	...obsidianmd.configs.recommended,
+	{
+		files: ['src/**/*.ts'],
+		rules: {
+			// getSettingDefinitions() needs Obsidian 1.13+. This plugin only has two
+			// settings and needs nothing newer than 1.4.0, so we keep the wider
+			// compatibility instead of raising minAppVersion for settings search.
+			'obsidianmd/settings-tab/prefer-setting-definitions': 'off',
+		},
+	},
 );
