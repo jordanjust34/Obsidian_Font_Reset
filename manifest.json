@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"minAppVersion": "1.4.0",
 	"description": "Reset the font size and zoom level with one click from the status bar.",
-	"author": "Your Name",
+	"author": "jordanjust34",
+	"authorUrl": "https://github.com/jordanjust34",
 	"isDesktopOnly": false
 }

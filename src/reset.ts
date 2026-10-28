@@ -11,11 +11,16 @@ export function resetZoom(plugin: FontResetPlugin): void {
 		return;
 	}
 
-	setBaseFontSize(app, settings.defaultFontSize);
-
-	if (settings.resetWindowZoom) {
-		resetWindowZoom(app);
+	if (!setBaseFontSize(app, settings.defaultFontSize)) {
+		new Notice('Could not reset the font size. See the developer console for details.');
+		return;
 	}
 
-	new Notice(`Font size reset to ${settings.defaultFontSize}px`);
+	const zoomReset = settings.resetWindowZoom ? resetWindowZoom(app) : true;
+
+	new Notice(
+		zoomReset
+			? `Font size reset to ${settings.defaultFontSize}px`
+			: `Font size reset to ${settings.defaultFontSize}px, but the window zoom could not be reset`,
+	);
 }
